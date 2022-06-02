@@ -8,8 +8,21 @@ class DataType(models.Model):
     maximum = models.IntegerField(blank=True)
 
 class Schema(models.Model):
+    COLUMN_SEPARATOR_CHOICES = (
+        (",", "Comma (,)"),
+        (";", "Semicolon (;)"),
+        ("|", "Pipe (|)"),
+    )
+
+    STRING_CHARACTER_CHOICES = (
+        ('"', 'Double-quote (")'),
+        ("*", "Asterisk (*)"),
+    )
+
     title = models.CharField(max_length=100)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     structure = models.TextField()
+    column_separator = models.CharField(max_length=10, default=',', choices=COLUMN_SEPARATOR_CHOICES)
+    string_character = models.CharField(max_length=10, default='"', choices=STRING_CHARACTER_CHOICES)
