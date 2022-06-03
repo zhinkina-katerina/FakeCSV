@@ -5,7 +5,8 @@
 "fields": {"title": "Full name",
 "data_type": "string",
 "minimum": 5,
-"maximum": 128
+"maximum": 128,
+"has_editable_range": "False"
 }},
 {
 "model": "schemas.datatype",
@@ -13,7 +14,8 @@
 "fields": {"title": "Job",
 "data_type": "string",
 "minimum": 8,
-"maximum": 64
+"maximum": 64,
+"has_editable_range": "False"
 }},
 {
 "model": "schemas.datatype",
@@ -21,7 +23,8 @@
 "fields": {"title": "Email",
 "data_type": "string",
 "minimum": 6,
-"maximum": 128
+"maximum": 128,
+"has_editable_range": "False"
 }},
 {
 "model": "schemas.datatype",
@@ -29,7 +32,8 @@
 "fields": {"title": "Domain name",
 "data_type": "string",
 "minimum": 4,
-"maximum": 128
+"maximum": 128,
+"has_editable_range": "False"
 }},
 {
 "model": "schemas.datatype",
@@ -37,7 +41,8 @@
 "fields": {"title": "Phone number",
 "data_type": "string",
 "minimum": 8,
-"maximum": 64
+"maximum": 64,
+"has_editable_range": "False"
 }},
 {
 "model": "schemas.datatype",
@@ -45,7 +50,8 @@
 "fields": {"title": "Company name",
 "data_type": "string",
 "minimum": 2,
-"maximum": 128
+"maximum": 128,
+"has_editable_range": "False"
 }},
 {
 "model": "schemas.datatype",
@@ -53,7 +59,8 @@
 "fields": {"title": "Text",
 "data_type": "string",
 "minimum": 1,
-"maximum": 16
+"maximum": 16,
+"has_editable_range": "True"
 }},
 {
 "model": "schemas.datatype",
@@ -61,7 +68,8 @@
 "fields": {"title": "Integer",
 "data_type": "int",
 "minimum": 0,
-"maximum": 999999
+"maximum": 999999,
+"has_editable_range": "True"
 }},
 {
 "model": "schemas.datatype",
@@ -69,7 +77,8 @@
 "fields": {"title": "Address",
 "data_type": "string",
 "minimum": 8,
-"maximum": 255
+"maximum": 255,
+"has_editable_range": "False"
 }},
 {
 "model": "schemas.datatype",
@@ -77,6 +86,7 @@
 "fields": {"title": "Date",
 "data_type": "date",
 "minimum": "0",
-"maximum": "0"
+"maximum": "0",
+"has_editable_range": "False"
 }}
 ]

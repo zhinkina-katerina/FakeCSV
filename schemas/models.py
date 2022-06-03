@@ -1,11 +1,11 @@
 from django.db import models
 
-
 class DataType(models.Model):
     title = models.CharField(max_length=120)
     data_type = models.CharField(max_length=120)
     minimum = models.IntegerField(blank=True)
     maximum = models.IntegerField(blank=True)
+    has_editable_range = models.BooleanField(default=False)
 
 class Schema(models.Model):
     COLUMN_SEPARATOR_CHOICES = (
