@@ -1,4 +1,19 @@
 from django.db import models
+import json
+
+
+class DataTypeManager(models.Manager):
+    def get_titles(self):
+        queryset = self.get_queryset()
+        result = [(x.id, x.title) for x in queryset]
+        return result
+
+    def get_items_have_range(self):
+        queryset = self.get_queryset()
+        result = {x.id: x.has_editable_range for x in queryset}
+        jsonString = json.dumps(result, indent=4)
+        return jsonString
+
 
 class DataType(models.Model):
     title = models.CharField(max_length=120)
@@ -6,6 +21,9 @@ class DataType(models.Model):
     minimum = models.IntegerField(blank=True)
     maximum = models.IntegerField(blank=True)
     has_editable_range = models.BooleanField(default=False)
+
+    objects = DataTypeManager()
+
 
 class Schema(models.Model):
     COLUMN_SEPARATOR_CHOICES = (
