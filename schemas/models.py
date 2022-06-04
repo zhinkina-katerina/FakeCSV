@@ -44,3 +44,16 @@ class Schema(models.Model):
     structure = models.TextField()
     column_separator = models.CharField(max_length=10, default=',', choices=COLUMN_SEPARATOR_CHOICES)
     string_character = models.CharField(max_length=10, default='"', choices=STRING_CHARACTER_CHOICES)
+
+class Dataset(models.Model):
+    STRING_STATUS_CHOICES = (
+        ('New', 'New'),
+        ('In_process', 'In Process'),
+        ('Completed', 'Completed'),
+        ('Failed', 'Failed'),
+    )
+    url = models.URLField()
+    status = models.CharField(max_length=20, default='New', choices=STRING_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    schema = models.ForeignKey(Schema, on_delete=models.CASCADE)
