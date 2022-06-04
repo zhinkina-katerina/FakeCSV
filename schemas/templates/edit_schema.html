@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
     <h2>New Schema</h2>
 
     <div class="row">
+    {% csrf_token %}
         <div class="col-6">
             <form id="form-schema" class="mt-3" method="POST">
             {{ form_schema_options.as_p }}
             </form>
         </div>
         <div class="col-6">
-            <button type="button" class="btn btn-success float-end">Success</button>
+            <button type="button" id="submit" class="btn btn-success float-end">Submit</button>
          </div>
     </div>
     <h3>Schema Columns</h3>
@@ -19,6 +19,7 @@
         <div class="m-4 data_type_form">
             <div class="row g-2 ">
                 <div class="col-3">
+
                     {{ form_data_type.title.label }}
                     {{ form_data_type.title }}
                 </div>
@@ -50,5 +51,6 @@
 </div>
 
 <script src="{% static 'js/schemas/form_managment_edit_schema.js' %}"></script>
+<script src="{% static 'js/schemas/get_form_content.js' %}"></script>
 
 {% endblock %}

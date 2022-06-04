@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, View, TemplateView
+import json
 from .models import Schema, DataType
 from .forms import SchemaForm, DataTypeForm
 
@@ -28,3 +29,16 @@ class SchemeEditView(TemplateView):
 
     def get_queryset(self):
         return DataType.objects
+
+    def post(self, request, *args, **kwargs):
+        new_schema_obj = request.POST.get('json_object')
+        new_schema_json = json.loads(new_schema_obj)
+        Schema.objects.create(
+            title=new_schema_json['schema']['title'],
+            column_separator=new_schema_json['schema']['column_separator'],
+            string_character = new_schema_json['schema']['string_character'],
+            structure=new_schema_json['schema_columns'],
+
+        )
+        return redirect('index.html')
+
