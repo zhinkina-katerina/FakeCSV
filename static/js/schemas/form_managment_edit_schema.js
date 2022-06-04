@@ -9,6 +9,9 @@ let birdForm = document.querySelectorAll(".data_type_form")
 
         form_data_types.onchange = function(event) {
         let target = event.target;
+        if (target.nodeName != 'SELECT'){
+            return
+        }
             showHiddenObject(target);
          }
         form_data_types.onclick = function(event) {
