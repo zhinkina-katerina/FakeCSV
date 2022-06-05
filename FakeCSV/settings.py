@@ -14,6 +14,11 @@ from pathlib import Path
 import os
 
 from dotenv import load_dotenv
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_beat',
     'schemas',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -158,3 +164,9 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERYBEAT_OPTS='-S django'
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+cloudinary.config(
+    cloud_name=os.getenv('CLOUD_NAME'),
+    api_key=os.getenv('API_KEY'),
+    api_secret=os.getenv('API_SECRET')
+)
