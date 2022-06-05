@@ -16,7 +16,6 @@ class DatasetHandler():
         self.structure = None
 
     def generate_csv(self, dataset):
-        try:
             self.dataset = dataset
             self.rows_quantity = dataset.rows_quantity
             self.schema = dataset.schema
@@ -31,9 +30,7 @@ class DatasetHandler():
 
             self.dataset.status = 'Completed'
             self.dataset.save()
-        except Exception:
-            self.dataset.status = 'Failed'
-            self.dataset.save()
+
 
     def sort_dictionary(self, dictionary):
         sorted_keys = sorted(dictionary, key=dictionary.get)
@@ -118,8 +115,12 @@ class DatasetHandler():
                                     )
             writer.writeheader()
             writer.writerows(rows)
+            csvfile.close()
+        with open(path, mode='r', newline='') as csvfile:
             self.dataset.csv_file.save(filename, File(csvfile))
             csvfile.close()
+        os.remove(path)
+
 
 
 
