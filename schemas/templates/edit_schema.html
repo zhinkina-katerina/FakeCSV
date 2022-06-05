@@ -1,56 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+    <title>Edit schema {{ object.title }}</title>
+{% endblock %}
 {% block content %}
-    <h2>New Schema</h2>
 
-    <div class="row">
-    {% csrf_token %}
-        <div class="col-6">
-            <form id="form-schema" class="mt-3" method="POST">
-            {{ form_schema_options.as_p }}
-            </form>
-        </div>
-        <div class="col-6">
-            <button type="button" id="submit" class="btn btn-success float-end">Submit</button>
-         </div>
-    </div>
-    <h3>Schema Columns</h3>
-    <form id="form-container" class="border rounded mt-3" method="POST">
-        <div class="m-4 data_type_form">
-            <div class="row g-2 ">
-                <div class="col-3">
+    <h2>Edit schema {{ object.title }}</h2>
 
-                    {{ form_data_type.title.label }}
-                    {{ form_data_type.title }}
-                </div>
-                <div class="col-3">
-                    {{ form_data_type.data_type.label }}
-                    {{ form_data_type.data_type }}
-                </div>
-                <div class="col-3 ">
-                    <div class="container d-none hidden_object">
-                        From
-                        {{ form_data_type.minimum }}
-                        To
-                        {{ form_data_type.maximum }}
-                    </div>
-                </div>
-                <div class="col-2">
-                    Order
-                    <input type="text" class="form-control" placeholder="" aria-label="Order" aria-describedby="basic-addon1">
-                </div>
-                <div class="col-1">
-                    <button type="button" class="btn btn-danger mt-4" id="delete_column">Delete</button>
-                </div>
-            </div>
-        </div>
-         <button id="add-form" type="button" class="btn btn-primary mb-2 ms-4 ">Add Another Column</button>
-    </form>
-<div class="d-none" id="items_have_range">
-{{ items_have_range }}
-</div>
-
-<script src="{% static 'js/schemas/form_managment_edit_schema.js' %}"></script>
-<script src="{% static 'js/schemas/get_form_content.js' %}"></script>
+    {% include 'snippets/schema_detail.html' %}
 
 {% endblock %}

@@ -1,18 +1,23 @@
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 let element_types = ["input", 'select']
 
-
 jQuery(document).ready(function() {
 
-         jQuery(document).on( 'click', "#submit", function() {
+         jQuery(document).on( 'click', "#submit", function(e) {
+              e.preventDefault();
+             if (validateForm() == false)
+             {
+                 return
+             }
              let json_object = get_json_object()
-             console.log(json_object)
-         jQuery.ajax({
-             headers: { "X-CSRFToken": csrftoken },
-             type: "POST",
-             url: '/edit_schema/',
-             dataType: "json",
-             data: {'json_object':JSON.stringify(json_object)},
+
+             jQuery.ajax({
+                 headers: { "X-CSRFToken": csrftoken },
+                 type: "POST",
+                 url: this.href,
+                 dataType: "json",
+                 data: {'json_object':JSON.stringify(json_object)},
+                 success: window.location="/"
 
 
          });
@@ -46,4 +51,14 @@ function get_values(element) {
         }
     }
     return dict
+}
+
+function validateForm() {
+  let titles = document.querySelectorAll('[name="title"]');
+  for (title of titles){
+      if (title.value == "") {
+        alert("All fields must be filled out");
+        return false;
+        }
+  }
 }
