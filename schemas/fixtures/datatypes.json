@@ -1,0 +1,102 @@
+[
+{
+"model": "schemas.datatype",
+"pk": 1,
+"fields": {"title": "Full name",
+"data_type": "string",
+"minimum": 5,
+"maximum": 128,
+"has_editable_range": "False",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 2,
+"fields": {"title": "Job",
+"data_type": "string",
+"minimum": 8,
+"maximum": 64,
+"has_editable_range": "False",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 3,
+"fields": {"title": "Email",
+"data_type": "string",
+"minimum": 6,
+"maximum": 128,
+"has_editable_range": "False",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 4,
+"fields": {"title": "Domain name",
+"data_type": "string",
+"minimum": 4,
+"maximum": 128,
+"has_editable_range": "False",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 5,
+"fields": {"title": "Phone number",
+"data_type": "string",
+"minimum": 8,
+"maximum": 64,
+"has_editable_range": "False",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 6,
+"fields": {"title": "Company name",
+"data_type": "string",
+"minimum": 2,
+"maximum": 128,
+"has_editable_range": "False",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 7,
+"fields": {"title": "Text",
+"data_type": "string",
+"minimum": 1,
+"maximum": 16,
+"has_editable_range": "True",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 8,
+"fields": {"title": "Integer",
+"data_type": "int",
+"minimum": 0,
+"maximum": 999999,
+"has_editable_range": "True",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 9,
+"fields": {"title": "Address",
+"data_type": "string",
+"minimum": 8,
+"maximum": 255,
+"has_editable_range": "False",
+"order": 0
+}},
+{
+"model": "schemas.datatype",
+"pk": 10,
+"fields": {"title": "Date",
+"data_type": "date",
+"minimum": "0",
+"maximum": "0",
+"has_editable_range": "False",
+"order": 0
+}}
+]

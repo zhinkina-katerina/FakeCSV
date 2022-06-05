@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="d-flex justify-content-between mb-4">
+            <h2>Data sets</h2>
+            <div>
+                <form class="row d-flex justify-content-end" method="POST" action ="{% url 'dataset_list' view.kwargs.id %}">
+                    {% csrf_token %}
+                  <div class="col-auto">
+                    <label for="rows" class="col-form-label">Rows:</label>
+                  </div>
+                  <div class="col-lg-2">
+                    <input type="hidden" name="id" id="id" value="{{view.kwargs.id}}">
+                    <input type="text" class="form-control" name="rows" required id="rows">
+
+                  </div>
+                  <div class="col-auto">
+                    <button type="submit" class="btn btn-success mb-3">Generate data</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+        <div>
+        {% if object_list  %}
+          <table class="table table-bordered">
+              <tr>
+                  <td class="col-lg-1"><b>#</b></td>
+                  <td class="col-lg-4"><b>Created</b></td>
+                  <td class="col-lg-4"><b>Status</b></td>
+                  <td class="col-lg-3"><b>Actions</b></td>
+              </tr>
+              {% for object in object_list %}
+              <tr>
+                  <td>{{object.id}}</td>
+                  <td>{{object.created_at}}</td>
+                  <td>
+                      <span class="badge{% if object.status == 'Completed' %} bg-success
+                                           {% elif  object.status == 'Failed'%} bg-danger
+                                            {% else %} bg-primary {% endif %}">
+                        {{object.status}}
+                      </span>
+                  </td>
+                  <td>
+                    {% if object.csv_file %}
+                    <a href="{{object.csv_file.url}}">Download</a>
+                    {% endif %}
+                  </td>
+              </tr>
+              {% endfor %}
+          </table>
+        {% else %}
+        <h2> Generate your first Dataset!</h2>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
