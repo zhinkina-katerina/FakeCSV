@@ -3,8 +3,9 @@ from faker import Faker
 from django.conf import settings
 from .models import Dataset, DataType
 import csv
-from django.core.files.storage import default_storage
+from django.core.files import File
 import os
+import cloudinary.uploader
 
 
 class DatasetHandler():
@@ -107,7 +108,7 @@ class DatasetHandler():
 
         fieldnames = [x['title'] for x in self.structure]
 
-        with default_storage.open(filename, 'w') as csvfile:
+        with open(path, 'w', newline='') as csvfile:
             writer = csv.DictWriter(csvfile,
                                     fieldnames=fieldnames,
                                     delimiter=self.schema.column_separator,
@@ -115,10 +116,15 @@ class DatasetHandler():
                                     )
             writer.writeheader()
             writer.writerows(rows)
-            csvfile.close()
 
-        self.dataset.file = filename
+        uploaded_file = cloudinary.uploader.upload('media/' + filename, resource_type='raw')
+        self.dataset.csv_file = uploaded_file['secure_url']
         self.dataset.save()
+        #     csvfile.close()
+        # with open(path, mode='r', newline='') as csvfile:
+        #     self.dataset.csv_file.save(filename, File(csvfile))
+        #     csvfile.close()
+        # os.remove(path)
 
 
 
