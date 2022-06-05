@@ -3,7 +3,7 @@ from faker import Faker
 from django.conf import settings
 from .models import Dataset, DataType
 import csv
-from django.core.files import File
+from django.core.files.storage import default_storage
 import os
 
 
@@ -107,7 +107,7 @@ class DatasetHandler():
 
         fieldnames = [x['title'] for x in self.structure]
 
-        with open(path, 'w', newline='') as csvfile:
+        with default_storage.open(filename, 'w', newline='') as csvfile:
             writer = csv.DictWriter(csvfile,
                                     fieldnames=fieldnames,
                                     delimiter=self.schema.column_separator,
@@ -116,10 +116,9 @@ class DatasetHandler():
             writer.writeheader()
             writer.writerows(rows)
             csvfile.close()
-        with open(path, mode='r', newline='') as csvfile:
-            self.dataset.csv_file.save(filename, File(csvfile))
-            csvfile.close()
-        os.remove(path)
+
+        self.dataset.file = filename
+        self.dataset.save()
 
 
 
