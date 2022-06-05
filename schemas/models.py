@@ -6,15 +6,15 @@ from django.contrib.auth.models import User
 
 class DataTypeManager(models.Manager):
     def get_titles(self):
-        # queryset = self.get_queryset()
-        # result = [(x.title, x.title) for x in queryset]
-        return 'result'
+        queryset = self.get_queryset()
+        result = [(x.title, x.title) for x in queryset]
+        return result
 
     def get_items_have_range(self):
-        # queryset = self.get_queryset()
-        # result = {x.title: x.has_editable_range for x in queryset}
-        # jsonString = json.dumps(result, indent=4)
-        return 'jsonString'
+        queryset = self.get_queryset()
+        result = {x.title: x.has_editable_range for x in queryset}
+        jsonString = json.dumps(result, indent=4)
+        return jsonString
 
 
 class DataType(models.Model):
