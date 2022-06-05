@@ -28,7 +28,7 @@ class SchemaForm(ModelForm):
 class DataTypeForm(ModelForm):
     class Meta:
         model = DataType
-        fields = ('title', 'data_type', 'has_editable_range', 'minimum', 'maximum')
+        fields = ('title', 'data_type', 'has_editable_range', 'minimum', 'maximum', 'order')
         widgets = {
             'data_type': widgets.Select(choices=DataType.objects.get_titles(),
                                         attrs={
@@ -42,6 +42,9 @@ class DataTypeForm(ModelForm):
                 'class': 'form-control',
             }),
             'maximum': widgets.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'order': widgets.TextInput(attrs={
                 'class': 'form-control',
             }),
         }
