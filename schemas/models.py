@@ -63,4 +63,5 @@ class Dataset(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     schema = models.ForeignKey(Schema, on_delete=models.CASCADE)
     rows_quantity = models.IntegerField(default=0)
+    url = models.URLField(default="")
 

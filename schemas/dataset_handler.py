@@ -5,6 +5,7 @@ from .models import Dataset, DataType
 import csv
 from django.core.files import File
 import os
+import cloudinary.uploader
 
 
 class DatasetHandler():
@@ -16,7 +17,6 @@ class DatasetHandler():
         self.structure = None
 
     def generate_csv(self, dataset):
-        try:
             self.dataset = dataset
             self.rows_quantity = dataset.rows_quantity
             self.schema = dataset.schema
@@ -31,9 +31,7 @@ class DatasetHandler():
 
             self.dataset.status = 'Completed'
             self.dataset.save()
-        except Exception:
-            self.dataset.status = 'Failed'
-            self.dataset.save()
+
 
     def sort_dictionary(self, dictionary):
         sorted_keys = sorted(dictionary, key=dictionary.get)
@@ -118,8 +116,17 @@ class DatasetHandler():
                                     )
             writer.writeheader()
             writer.writerows(rows)
+
+        uploaded_file = cloudinary.uploader.upload(path, resource_type='raw')
+
+
+        with open(path, mode='r', newline='') as csvfile:
             self.dataset.csv_file.save(filename, File(csvfile))
             csvfile.close()
+
+        self.dataset.url = uploaded_file['secure_url']
+        self.dataset.save()
+
 
 
 

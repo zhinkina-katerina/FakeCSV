@@ -12,7 +12,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'search_for_new_dataset': {
         'task': 'schemas.tasks.search_for_new_dataset',
-        'schedule': 60.0
+        'schedule': 30.0
     },
 
 }
