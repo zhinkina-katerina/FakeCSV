@@ -107,7 +107,7 @@ class DatasetHandler():
 
         fieldnames = [x['title'] for x in self.structure]
 
-        with default_storage.open(filename, 'w', newline='') as csvfile:
+        with default_storage.open(filename, 'w') as csvfile:
             writer = csv.DictWriter(csvfile,
                                     fieldnames=fieldnames,
                                     delimiter=self.schema.column_separator,
