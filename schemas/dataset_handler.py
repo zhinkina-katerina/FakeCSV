@@ -117,7 +117,7 @@ class DatasetHandler():
             writer.writeheader()
             writer.writerows(rows)
 
-        uploaded_file = cloudinary.uploader.upload('media/' + filename, resource_type='raw')
+        uploaded_file = cloudinary.uploader.upload(path, resource_type='raw')
         self.dataset.csv_file = uploaded_file['secure_url']
         self.dataset.save()
         #     csvfile.close()
