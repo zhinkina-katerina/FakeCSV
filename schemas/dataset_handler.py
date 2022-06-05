@@ -118,13 +118,14 @@ class DatasetHandler():
             writer.writerows(rows)
 
         uploaded_file = cloudinary.uploader.upload(path, resource_type='raw')
-        self.dataset.csv_file = uploaded_file['secure_url']
+
+
+        with open(path, mode='r', newline='') as csvfile:
+            self.dataset.csv_file.save(filename, File(csvfile))
+            csvfile.close()
+
+        self.dataset.url = uploaded_file['secure_url']
         self.dataset.save()
-        #     csvfile.close()
-        # with open(path, mode='r', newline='') as csvfile:
-        #     self.dataset.csv_file.save(filename, File(csvfile))
-        #     csvfile.close()
-        # os.remove(path)
 
 
 
