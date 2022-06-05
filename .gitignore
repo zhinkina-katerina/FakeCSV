@@ -130,3 +130,8 @@ dmypy.json
 
 /.idea
 /static_cdn/static_root/
+/static_cdn/
+/celerybeat-schedule.bak
+/celerybeat-schedule.dat
+/celerybeat-schedule.dir
+
