@@ -3,20 +3,6 @@ import json
 from django.contrib.auth.models import User
 
 
-
-class DataTypeManager(models.Manager):
-    def get_titles(self):
-        queryset = self.get_queryset()
-        result = [(x.title, x.title) for x in queryset]
-        return result
-
-    def get_items_have_range(self):
-        queryset = self.get_queryset()
-        result = {x.title: x.has_editable_range for x in queryset}
-        jsonString = json.dumps(result, indent=4)
-        return jsonString
-
-
 class DataType(models.Model):
     title = models.CharField(max_length=120)
     data_type = models.CharField(max_length=120)
@@ -24,8 +10,6 @@ class DataType(models.Model):
     maximum = models.IntegerField(blank=True)
     has_editable_range = models.BooleanField(default=False)
     order = models.IntegerField(blank=True)
-
-    objects = DataTypeManager()
 
 
 class Schema(models.Model):
@@ -49,7 +33,6 @@ class Schema(models.Model):
     string_character = models.CharField(max_length=10, default='"', choices=STRING_CHARACTER_CHOICES)
 
 
-
 class Dataset(models.Model):
     STRING_STATUS_CHOICES = (
         ('New', 'New'),
@@ -64,4 +47,20 @@ class Dataset(models.Model):
     schema = models.ForeignKey(Schema, on_delete=models.CASCADE)
     rows_quantity = models.IntegerField(default=0)
     url = models.URLField(default="")
+    exception = models.TextField(default="")
 
+
+class DataTypeProvider:
+    def __init__(self):
+        self.model = DataType
+
+    def get_all(self):
+        return self.model.objects.all()
+
+    def get_items_have_range(self):
+        result = {x.title: x.has_editable_range for x in self.get_all()}
+        json_string = json.dumps(result, indent=4)
+        return json_string
+
+    def get_titles(self):
+        return [(x.title, x.title) for x in self.get_all()]

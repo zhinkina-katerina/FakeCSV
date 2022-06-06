@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from .models import Schema, DataType
+from .models import Schema, DataType, DataTypeProvider
 
 
 class SchemaForm(ModelForm):
@@ -12,12 +12,10 @@ class SchemaForm(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             }),
-
             'column_separator': widgets.Select(attrs={
                 'class': 'form-select',
                 'required': 'required'
             }),
-
             'string_character': widgets.Select(attrs={
                 'class': 'form-select',
                 'required': 'required'
@@ -30,11 +28,13 @@ class DataTypeForm(ModelForm):
         model = DataType
         fields = ('title', 'data_type', 'has_editable_range', 'minimum', 'maximum', 'order')
         widgets = {
-            'data_type': widgets.Select(choices=DataType.objects.get_titles(),
-                                        attrs={
-                                            'id': 'id_selector',
-                                            'class': 'form-select',
-                                        }),
+            'data_type': widgets.Select(
+                choices=DataTypeProvider().get_titles(),
+                attrs={
+                    'id': 'id_selector',
+                    'class': 'form-select',
+                }
+            ),
             'title': widgets.TextInput(attrs={
                 'class': 'form-control',
             }),
