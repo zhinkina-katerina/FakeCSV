@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, get_object_or_404, HttpResponse
 from django.views.generic import ListView, TemplateView, View
 import json
-from .models import Schema, DataType, Dataset
+from .models import Schema, Dataset, DataTypeProvider
 from .forms import SchemaForm, DataTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -9,12 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class SchemeList(LoginRequiredMixin, ListView):
     template_name = 'index.html'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(SchemeList, self).get_context_data(**kwargs)
-        return context
-
     def get_queryset(self):
-        return Schema.objects.filter(user=self.request.user)
+        return Schema.objects.filter(user=self.request.user).order_by("created_at")
 
 
 class SchemeCreateView(LoginRequiredMixin, TemplateView):
@@ -22,18 +18,15 @@ class SchemeCreateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(SchemeCreateView, self).get_context_data(**kwargs)
-        context['object_list'] = self.get_queryset().all()
+        data_type_provider = DataTypeProvider()
+        context['object_list'] = data_type_provider.get_all()
         context['form_schema_options'] = SchemaForm()
         context['form_data_type'] = DataTypeForm()
-        context['items_have_range'] = self.get_queryset().get_items_have_range()
+        context['items_have_range'] = data_type_provider.get_items_have_range()
         return context
 
-    def get_queryset(self):
-        return DataType.objects
-
     def post(self, request, *args, **kwargs):
-        new_schema_obj = request.POST.get('json_object')
-        new_schema_json = json.loads(new_schema_obj)
+        new_schema_json = json.loads(request.POST.get('json_object', {}))
         Schema.objects.create(
             title=new_schema_json['schema']['title'],
             column_separator=new_schema_json['schema']['column_separator'],
@@ -42,7 +35,6 @@ class SchemeCreateView(LoginRequiredMixin, TemplateView):
             user=request.user
         )
         return HttpResponse(status=200)
-
 
 
 class SchemeEditView(SchemeCreateView):
@@ -56,22 +48,15 @@ class SchemeEditView(SchemeCreateView):
             "column_separator": schema.column_separator,
             "string_character": schema.string_character,
         }
-        forms = []
-        structure = list(eval(schema.structure))
-        for item in structure:
-            forms.append(DataTypeForm(initial=item))
-        # context['object_list']=self.get_queryset().all()
+        forms = [DataTypeForm(initial=item) for item in list(eval(schema.structure))]
         context['form_schema_options'] = SchemaForm(initial=initial_dict)
         context['forms'] = forms
         context['object'] = schema
-        # context['items_have_range'] = self.get_queryset().get_items_have_range()
         return context
 
     def post(self, request, *args, **kwargs):
-        new_schema_obj = request.POST.get('json_object')
-        new_schema_json = json.loads(new_schema_obj)
-        schema_id = self.kwargs['id']
-        schema = Schema.objects.get(id=schema_id)
+        new_schema_json = json.loads(request.POST.get('json_object'))
+        schema = Schema.objects.get(id=self.kwargs['id'])
         schema.title = new_schema_json['schema']['title']
         schema.column_separator = new_schema_json['schema']['column_separator']
         schema.string_character = new_schema_json['schema']['string_character']
@@ -95,10 +80,9 @@ class DatasetView(LoginRequiredMixin, ListView):
     template_name = "dataset_list.html"
 
     def post(self, request, id, *args, **kwargs):
-        id_schema = request.POST.get('id')
         Dataset.objects.create(
             status="New",
-            schema=Schema.objects.filter(id=id_schema).first(),
+            schema=Schema.objects.filter(id=id).first(),
             rows_quantity=request.POST.get('rows'),
             user=request.user
         )
@@ -106,4 +90,4 @@ class DatasetView(LoginRequiredMixin, ListView):
 
     def get_queryset(self, **kwargs):
         schema_id = self.kwargs['id']
-        return Dataset.objects.all().filter(schema=schema_id).order_by("-created_at")
+        return Dataset.objects.all().filter(schema=schema_id).order_by("created_at")

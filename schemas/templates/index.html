@@ -2,46 +2,46 @@
 {% load static %}
 
 {% block content %}
-{% csrf_token %}
-        <div class="row justify-content-between">
-            <div class="col">
-                <h2>Data Schemas</h2>
-            </div>
-            <div class="col">
-                <a href="{% url 'schema_create' %}" type="button" class="btn btn-success float-end">New schema</a>
-            </div>
+    {% csrf_token %}
+    <div class="row justify-content-between">
+        <div class="col">
+            <h2>Data Schemas</h2>
         </div>
+        <div class="col">
+            <a href="{% url 'schema_create' %}" type="button" class="btn btn-success float-end">New schema</a>
+        </div>
+    </div>
 
-        <div class="row">
-            {% if object_list  %}
-                <table class="table table-bordered">
-                    <thead>
+    <div class="row">
+        {% if object_list  %}
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Modified</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Modified</th>
-                        <th scope="col">Actions</th>
+                        <th>{{ object.id }}</th>
+                        <td><a href="{% url 'dataset_list' id=object.id %}">{{ object.title }}</a></td>
+                        <td>{{ object.modified_at }}</td>
+                        <td><a href="{% url 'schema_edit' object.id %}" class="text-primary">Edit scheme</a>
+                            <a href="{% url 'schema_delete' object.id %}"
+                               class="ml-2 text-danger"
+                            id="delete_schema_button">Delete</a></td>
                     </tr>
-                    </thead>
-                    <tbody>
-                        {% for object in object_list %}
-                        <tr>
-                            <th>{{ object.id }}</th>
-                            <td><a href="{% url 'dataset_list' id=object.id %}">{{ object.title }}</a></td>
-                            <td>{{ object.modified_at }}</td>
-                            <td><a href="{% url 'schema_edit' object.id %}" class="text-primary">Edit scheme</a>
-                                <a href="{% url 'schema_delete' object.id %}"
-                                   class="ml-2 text-danger"
-                                id="delete_schema_button">Delete</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <div class="text-center mt-lg-5">
-                <h3>Create your first Schema!</h3>
-                </div>
-            {% endif %}
-        </div>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="text-center mt-lg-5">
+            <h3>Create your first Schema!</h3>
+            </div>
+        {% endif %}
+    </div>
 <script src="{% static 'js/schemas/delete_schema_button.js' %}"></script>
 {% endblock %}

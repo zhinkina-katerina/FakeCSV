@@ -9,17 +9,17 @@
             <div>
                 <form class="row d-flex justify-content-end" method="POST" action ="{% url 'dataset_list' view.kwargs.id %}">
                     {% csrf_token %}
-                  <div class="col-auto">
-                    <label for="rows" class="col-form-label">Rows:</label>
-                  </div>
-                  <div class="col-lg-2">
-                    <input type="hidden" name="id" id="id" value="{{view.kwargs.id}}">
-                    <input type="text" class="form-control" name="rows" required id="rows">
+                    <div class="col-auto">
+                        <label for="rows" class="col-form-label">Rows:</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="hidden" name="id" id="id" value="{{view.kwargs.id}}">
+                        <input type="text" class="form-control" name="rows" required id="rows">
 
-                  </div>
-                  <div class="col-auto">
-                    <button type="submit" class="btn btn-success mb-3">Generate data</button>
-                  </div>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success mb-3">Generate data</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -38,8 +38,9 @@
                   <td>{{object.created_at}}</td>
                   <td>
                       <span class="badge{% if object.status == 'Completed' %} bg-success
-                                           {% elif  object.status == 'Failed'%} bg-danger
-                                            {% else %} bg-primary {% endif %}">
+                                        {% elif  object.status == 'Failed'%} bg-danger
+                                        {% else %} bg-primary
+                                        {% endif %}">
                         {{object.status}}
                       </span>
                   </td>
