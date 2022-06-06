@@ -1,10 +1,11 @@
-let birdForm = document.querySelectorAll(".data_type_form")
+        let birdForm = document.querySelectorAll(".data_type_form")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
         let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
         let form_data_types = document.getElementById("form-container")
         let formNum = birdForm.length-1
         let json_obj = get_json()
+        showHiddenFieldsWhileEdit()
         addButton.addEventListener('click', addForm)
 
         form_data_types.onchange = function(event) {
@@ -51,4 +52,17 @@ let birdForm = document.querySelectorAll(".data_type_form")
             var dict_element = document.getElementById('items_have_range')
             var dict_content = dict_element.textContent
             return JSON.parse(dict_content)
+        }
+        function showHiddenFieldsWhileEdit() {
+            let hidden_objects = document.getElementsByClassName('hidden_object')
+            for (obj of hidden_objects){
+                 let selector = obj.closest(".row").getElementsByClassName('form-select')[0]
+                if (json_obj[selector.value] == true){
+                    obj.classList.remove('d-none')
+                    obj.classList.add('d-block')
+                } else {
+                    obj.classList.remove('d-block')
+                    obj.classList.add('d-none')
+                }
+            }
         }
