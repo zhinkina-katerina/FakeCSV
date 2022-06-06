@@ -134,3 +134,4 @@ dmypy.json
 /celerybeat-schedule.dat
 /celerybeat-schedule.dir
 
+/static_cdn/media_root/datasets/
