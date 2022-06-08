@@ -92,9 +92,6 @@ class DatasetHandler:
         filename = f'dataset_{self.schema.id}_{created_date}.csv'
         path = Path(settings.MEDIA_ROOT).joinpath("datasets").joinpath(filename)
 
-        if path.is_file():
-            os.remove(path)
-
         fieldnames = [x['title'] for x in self.structure]
 
         with open(path, 'w', newline='') as f:
