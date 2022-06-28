@@ -49,10 +49,10 @@ Password: admin_2
 7. Run fixteres  `python manage.py loaddata datatypes.json`
 
 8. In terminal-1 run celery-beat
-`celery -A alarm_in_Ukraine beat`
+`celery -A FakeCSV beat`
 
 9. ВIn terminal-2 run celery worker
-`celery -A alarm_in_Ukraine worker -l INFO`
+`celery -A FakeCSV worker -l INFO`
 
 10. To start the server, enter `python manage.py runserver`
 
